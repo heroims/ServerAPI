@@ -17,14 +17,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //离散型API使用
     [NSClassFromString(@"DemoAPI") newRequestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
         
     } requestTag:NSStringFromClass([self class])];
     
-    BaseServerAPI *api=[[NSClassFromString(@"DemoAPI") alloc] init];
-    api.requestParameters=nil;
-    api.requestTag=NSStringFromClass([self class]);
-    [api requestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
+    BaseServerAPI *discreteApi=[[NSClassFromString(@"DemoAPI") alloc] init];
+    discreteApi.requestParameters=nil;
+    discreteApi.requestTag=NSStringFromClass([self class]);
+    [discreteApi requestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
+        
+    }];
+    
+    //集约型API使用  可以直接类扩展加静态方法设置
+    ServerAPI *intensiveAPI=[[ServerAPI alloc] init];
+    intensiveAPI.requestHost=@"http://xxx.xxx.xxx";
+    intensiveAPI.requestParameters=nil;
+    intensiveAPI.requestTag=NSStringFromClass([self class]);
+    [intensiveAPI requestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
         
     }];
     // Do any additional setup after loading the view, typically from a nib.
