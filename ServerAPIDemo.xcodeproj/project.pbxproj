@@ -16,6 +16,11 @@
 		D8B48F301E11722A0075A689 /* ServerAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B48F2A1E11722A0075A689 /* ServerAPI.m */; };
 		D8B48F311E11722A0075A689 /* ServerAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B48F2C1E11722A0075A689 /* ServerAPIManager.m */; };
 		D8B48F321E11722A0075A689 /* ServerResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B48F2F1E11722A0075A689 /* ServerResult.m */; };
+		D8B48F411E1AB19C0075A689 /* ServerAPI+Demo.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B48F401E1AB19C0075A689 /* ServerAPI+Demo.m */; };
+		D8B48F441E1AB30B0075A689 /* ServerAPIManager+Demo.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B48F431E1AB30B0075A689 /* ServerAPIManager+Demo.m */; };
+		D8B48F471E1AB3210075A689 /* ServerResult+Demo.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B48F461E1AB3210075A689 /* ServerResult+Demo.m */; };
+		D8B48F4B1E1AC2390075A689 /* DemoAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B48F4A1E1AC2390075A689 /* DemoAPI.m */; };
+		D8B48F4E1E1AC2AD0075A689 /* BaseServerAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B48F4D1E1AC2AD0075A689 /* BaseServerAPI.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +41,17 @@
 		D8B48F2D1E11722A0075A689 /* ServerAPIProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerAPIProtocol.h; sourceTree = "<group>"; };
 		D8B48F2E1E11722A0075A689 /* ServerResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerResult.h; sourceTree = "<group>"; };
 		D8B48F2F1E11722A0075A689 /* ServerResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerResult.m; sourceTree = "<group>"; };
+		D8B48F3F1E1AB19C0075A689 /* ServerAPI+Demo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ServerAPI+Demo.h"; sourceTree = "<group>"; };
+		D8B48F401E1AB19C0075A689 /* ServerAPI+Demo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ServerAPI+Demo.m"; sourceTree = "<group>"; };
+		D8B48F421E1AB30B0075A689 /* ServerAPIManager+Demo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ServerAPIManager+Demo.h"; sourceTree = "<group>"; };
+		D8B48F431E1AB30B0075A689 /* ServerAPIManager+Demo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ServerAPIManager+Demo.m"; sourceTree = "<group>"; };
+		D8B48F451E1AB3210075A689 /* ServerResult+Demo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ServerResult+Demo.h"; sourceTree = "<group>"; };
+		D8B48F461E1AB3210075A689 /* ServerResult+Demo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ServerResult+Demo.m"; sourceTree = "<group>"; };
+		D8B48F491E1AC2390075A689 /* DemoAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoAPI.h; sourceTree = "<group>"; };
+		D8B48F4A1E1AC2390075A689 /* DemoAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoAPI.m; sourceTree = "<group>"; };
+		D8B48F4C1E1AC2AD0075A689 /* BaseServerAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseServerAPI.h; sourceTree = "<group>"; };
+		D8B48F4D1E1AC2AD0075A689 /* BaseServerAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseServerAPI.m; sourceTree = "<group>"; };
+		D8B48F4F1E1AC73E0075A689 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +84,8 @@
 		D8B48EC91E116DDC0075A689 /* ServerAPIDemo */ = {
 			isa = PBXGroup;
 			children = (
+				D8B48F481E1AC2160075A689 /* ServerAPIs */,
+				D8B48F351E1AA1A00075A689 /* ServerAPICategory */,
 				D8B48F281E11722A0075A689 /* ServerAPI */,
 				D8B48ECD1E116DDC0075A689 /* AppDelegate.h */,
 				D8B48ECE1E116DDC0075A689 /* AppDelegate.m */,
@@ -86,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				D8B48ECB1E116DDC0075A689 /* main.m */,
+				D8B48F4F1E1AC73E0075A689 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -103,6 +122,30 @@
 			);
 			path = ServerAPI;
 			sourceTree = SOURCE_ROOT;
+		};
+		D8B48F351E1AA1A00075A689 /* ServerAPICategory */ = {
+			isa = PBXGroup;
+			children = (
+				D8B48F3F1E1AB19C0075A689 /* ServerAPI+Demo.h */,
+				D8B48F401E1AB19C0075A689 /* ServerAPI+Demo.m */,
+				D8B48F421E1AB30B0075A689 /* ServerAPIManager+Demo.h */,
+				D8B48F431E1AB30B0075A689 /* ServerAPIManager+Demo.m */,
+				D8B48F451E1AB3210075A689 /* ServerResult+Demo.h */,
+				D8B48F461E1AB3210075A689 /* ServerResult+Demo.m */,
+			);
+			path = ServerAPICategory;
+			sourceTree = "<group>";
+		};
+		D8B48F481E1AC2160075A689 /* ServerAPIs */ = {
+			isa = PBXGroup;
+			children = (
+				D8B48F4C1E1AC2AD0075A689 /* BaseServerAPI.h */,
+				D8B48F4D1E1AC2AD0075A689 /* BaseServerAPI.m */,
+				D8B48F491E1AC2390075A689 /* DemoAPI.h */,
+				D8B48F4A1E1AC2390075A689 /* DemoAPI.m */,
+			);
+			path = ServerAPIs;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -176,12 +219,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8B48F4E1E1AC2AD0075A689 /* BaseServerAPI.m in Sources */,
+				D8B48F471E1AB3210075A689 /* ServerResult+Demo.m in Sources */,
+				D8B48F4B1E1AC2390075A689 /* DemoAPI.m in Sources */,
 				D8B48ED21E116DDC0075A689 /* ViewController.m in Sources */,
 				D8B48ECF1E116DDC0075A689 /* AppDelegate.m in Sources */,
+				D8B48F441E1AB30B0075A689 /* ServerAPIManager+Demo.m in Sources */,
 				D8B48F311E11722A0075A689 /* ServerAPIManager.m in Sources */,
 				D8B48F321E11722A0075A689 /* ServerResult.m in Sources */,
 				D8B48ECC1E116DDC0075A689 /* main.m in Sources */,
 				D8B48F301E11722A0075A689 /* ServerAPI.m in Sources */,
+				D8B48F411E1AB19C0075A689 /* ServerAPI+Demo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +285,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/ServerAPIDemo/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -283,6 +333,8 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/ServerAPIDemo/PrefixHeader.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

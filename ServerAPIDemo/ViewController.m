@@ -16,6 +16,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [NSClassFromString(@"DemoAPI") newRequestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
+        
+    } requestTag:NSStringFromClass([self class])];
+    
+    BaseServerAPI *api=[[NSClassFromString(@"DemoAPI") alloc] init];
+    api.requestParameters=nil;
+    api.requestTag=NSStringFromClass([self class]);
+    [api requestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
+        
+    }];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
