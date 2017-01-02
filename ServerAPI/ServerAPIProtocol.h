@@ -1,9 +1,9 @@
 //
 //  ServerAPIProtocol.h
-//  xgoods
+//  ServerAPIDemo
 //
-//  Created by admin on 2016/12/1.
-//  Copyright © 2016年 Look. All rights reserved.
+//  Created by Zhao Yiqi on 2016/12/1.
+//  Copyright © 2016年 Zhao Yiqi. All rights reserved.
 //
 
 //通过Category对ServerAPI实现对应的协议

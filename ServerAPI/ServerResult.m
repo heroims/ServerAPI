@@ -1,9 +1,9 @@
 //
 //  ServerResult.m
-//  xgoods
+//  ServerAPIDemo
 //
-//  Created by admin on 2016/12/2.
-//  Copyright © 2016年 Look. All rights reserved.
+//  Created by Zhao Yiqi on 2016/12/2.
+//  Copyright © 2016年 Zhao Yiqi. All rights reserved.
 //
 
 #import "ServerResult.h"
