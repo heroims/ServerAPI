@@ -68,7 +68,7 @@ NSString *const UnkownRequestAPITag = @"UnkownTag";
 
 -(NSString *)cacheID{
     if (_accessType==APIAccessType_Get||_accessType==APIAccessType_Post) {
-        NSString *cacheLongID=self.fullRequestURL;
+        NSString *cacheLongID=_requestURL?_requestURL:self.fullRequestURL;
         
         NSURL *requestUrl=[NSURL URLWithString:cacheLongID];
         NSString *urlQuery=requestUrl.query;
