@@ -37,6 +37,15 @@
     [intensiveAPI requestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
         
     }];
+    
+    //直接请求Url
+    ServerAPI *urlAPI=[[ServerAPI alloc] init];
+    urlAPI.requestURL=@"http://xxx.xxx.xxx";
+    urlAPI.requestTag=NSStringFromClass([self class]);
+    [urlAPI requestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
+        
+    }];
+
     // Do any additional setup after loading the view, typically from a nib.
 }
 
