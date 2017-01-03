@@ -12,6 +12,7 @@
 
 @implementation ServerAPI (Demo)
 
+
 NSDate *_endDate;
 
 -(NSDate *)endDate{
@@ -36,7 +37,6 @@ NSDate *_endDate;
             if (self.returnClass!=nil) {
                 
 //                result.formatData=[self.returnClass yy_modelWithJSON:data];
-                [[ServerAPIManager sharedServerAPIManager] saveDataCacheWithResult:(id)result];
             }
             
         }
@@ -46,6 +46,10 @@ NSDate *_endDate;
         }
         
         result.api=self;
+        
+        if (self.shouldCache&&result.status==ServerResultStatus_Success) {
+            [[ServerAPIManager sharedServerAPIManager] saveDataCacheWithResult:(id)result];
+        }
         
     }
     
@@ -73,5 +77,13 @@ NSDate *_endDate;
         dispatch_group_leave(self.completionGroup);
     }
 }
+
+//- (void)encodeWithCoder:(NSCoder *)aCoder {
+//    [self yy_modelEncodeWithCoder:aCoder];
+//}
+//
+//- (id)initWithCoder:(NSCoder *)aDecoder {
+//    return [self yy_modelInitWithCoder:aDecoder];
+//}
 
 @end

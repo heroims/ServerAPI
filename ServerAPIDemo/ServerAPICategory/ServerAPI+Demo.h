@@ -9,6 +9,9 @@
 #import "ServerAPI.h"
 #import "ServerAPIProtocol.h"
 
-@interface ServerAPI (Demo)<ServerAPIResponseProtocol>
+@interface ServerAPI (Demo)<
+ServerAPIResponseProtocol
+//,NSCoding
+>
 
 @end

@@ -9,6 +9,8 @@
 #import "ServerAPIManager.h"
 #import "ServerAPIProtocol.h"
 
+//extern NSString * const apiCacheName;
+
 @interface ServerAPIManager (Demo)<ServerAPIManagerRequestProtocol,ServerAPIManagerCacheProtocol>
 
 @end

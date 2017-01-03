@@ -9,6 +9,9 @@
 #import "ServerResult.h"
 
 @interface ServerResult (Demo)
+/**<
+NSCoding
+>*/
 
 @property(nonatomic,readonly)NSString *errorMessage;
 

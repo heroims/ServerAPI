@@ -11,17 +11,29 @@
 //
 //#import "AFHTTPSessionManager.h"
 
+//NSString * const apiCacheName = @"apiCacheName";
+//
+//static NSTimeInterval cacheTime = 1;
+//
+//static NSTimeInterval memoryCacheTime = 5*60;
+
 @implementation ServerAPIManager (Demo)
 
 -(BOOL)fetchDataCacheWithAPI:(ServerAPI *)api completion:(sap_requestCompletion)completion error:(NSError*)error{
-//    YYCache *cache=[[YYCache alloc] initWithName:apiCacheName];
+//    YYCache *cache=[[YYCache alloc] initWithName:[api isKindOfClass:NSClassFromString(@"AnalyticsAPI")]?apiStatCacheName:apiCacheName];
 //    cache.memoryCache.shouldRemoveAllObjectsOnMemoryWarning=YES;
-//    ServerResult *cacheData=[ServerResult yy_modelWithJSON:[cache objectForKey:api.cacheID]];
-//    if (error==nil) {
-//        if ([api.startDate timeIntervalSince1970]-[cacheData.api.endDate timeIntervalSince1970]>cacheTime) {
-//            return false;
-//        }
+//    cache.memoryCache.autoTrimInterval=memoryCacheTime;
+//    cache.diskCache.autoTrimInterval=[api isKindOfClass:NSClassFromString(@"AnalyticsAPI")]?statCacheTime:cacheTime;
+//    
+//    ServerResult *cacheData=nil;
+//    @try {
+//        cacheData=[NSKeyedUnarchiver unarchiveObjectWithData:(NSData*)[cache objectForKey:api.cacheID]];
+//    } @catch (NSException *exception) {
+//        
+//    } @finally {
+//        
 //    }
+//    
 //    if (cacheData) {
 //        cacheData.error=error;
 //        [api responseFormatWithData:cacheData.originData error:error completion:completion cacheData:cacheData];
@@ -31,8 +43,10 @@
 }
 
 -(void)saveDataCacheWithResult:(ServerResult *)result{
-//    YYCache *cache=[[YYCache alloc] initWithName:apiCacheName];
-//    [cache setObject:[result yy_modelToJSONData] forKey:result.api.cacheID];
+//    YYCache *cache=[[YYCache alloc] initWithName:[result.api isKindOfClass:NSClassFromString(@"AnalyticsAPI")]?apiStatCacheName:apiCacheName];
+//    NSData *data=[NSKeyedArchiver archivedDataWithRootObject:result];
+//    
+//    [cache setObject:data forKey:result.api.cacheID];
     
 }
 
