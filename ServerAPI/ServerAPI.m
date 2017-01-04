@@ -123,11 +123,18 @@ NSString *const UnkownRequestAPITag = @"UnkownTag";
         [_fullRequestPath stringByReplacingOccurrencesOfString:pathParameterKey withString:self.requestPathParameters[pathParameterKey]];
     }
     for (NSString *parameterKey in _requestParameters.allKeys) {
-        if (![_fullRequestPath containsString:@"?"]) {
-            _fullRequestPath=[NSString stringWithFormat:@"%@?%@=%@",_fullRequestPath,parameterKey,self.requestParameters[parameterKey]];
-        }
-        else{
-            _fullRequestPath=[NSString stringWithFormat:@"%@&%@=%@",_fullRequestPath,parameterKey,self.requestParameters[parameterKey]];
+        //有时候系统自动调用descriptionWithLocale做string转换会失败导致stringWithFormat直接crash。。。所以加try catch
+        @try {
+            if (![_fullRequestPath containsString:@"?"]) {
+                _fullRequestPath=[NSString stringWithFormat:@"%@?%@=%@",_fullRequestPath,parameterKey,self.requestParameters[parameterKey]];
+            }
+            else{
+                _fullRequestPath=[NSString stringWithFormat:@"%@&%@=%@",_fullRequestPath,parameterKey,self.requestParameters[parameterKey]];
+            }
+        } @catch (NSException *exception) {
+            
+        } @finally {
+            
         }
     }
     return _fullRequestPath;

@@ -43,13 +43,17 @@ static ServerAPIManager *sharedInstanceServerAPIManager=nil;
 }
 
 -(void)addRequestWithServerAPI:(ServerAPI*)api{
-    [self.apiRequests setValue:api forKey:api.requestID];
-    [self.apiRequestIDs addObject:api.requestID];
+    if (api) {
+        [self.apiRequests setValue:api forKey:api.requestID];
+        [self.apiRequestIDs addObject:api.requestID];
+    }
 }
 
 -(void)removeRequestWithServerAPI:(ServerAPI*)api{
-    [self.apiRequests removeObjectForKey:api.requestID];
-    [self.apiRequestIDs removeObject:api.requestID];
+    if (api) {
+        [self.apiRequests removeObjectForKey:api.requestID];
+        [self.apiRequestIDs removeObject:api.requestID];
+    }
 }
 
 #pragma mark - ServerAPIManagerRequestOptionalProtocol
