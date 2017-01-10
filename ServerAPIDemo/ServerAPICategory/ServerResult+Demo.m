@@ -35,5 +35,9 @@
 //- (id)initWithCoder:(NSCoder *)aDecoder {
 //    return [self yy_modelInitWithCoder:aDecoder];
 //}
+//
+//- (id)copyWithZone:(NSZone *)zone {
+//    return [self yy_modelCopy];
+//}
 
 @end

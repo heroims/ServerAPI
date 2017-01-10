@@ -11,6 +11,12 @@
 
 //extern NSString * const apiCacheName;
 
-@interface ServerAPIManager (Demo)<ServerAPIManagerRequestProtocol,ServerAPIManagerCacheProtocol>
+@interface ServerAPIManager (Demo)
+<
+ServerAPIManagerRequestProtocol
+,ServerAPIManagerCacheProtocol
+//,NSCoding
+//,NSCopying
+>
 
 @end

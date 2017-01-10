@@ -12,6 +12,7 @@
 @interface ServerAPI (Demo)<
 ServerAPIResponseProtocol
 //,NSCoding
+//,NSCopying
 >
 
 @end

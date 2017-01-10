@@ -11,6 +11,7 @@
 @interface ServerResult (Demo)
 /**<
 NSCoding
+,NSCopying
 >*/
 
 @property(nonatomic,readonly)NSString *errorMessage;

@@ -11,13 +11,23 @@
 //
 //#import "AFHTTPSessionManager.h"
 
-//NSString * const apiCacheName = @"apiCacheName";
+@implementation ServerAPIManager (Demo)
+//
+//NSString * const apiCacheName = @"";
 //
 //static NSTimeInterval cacheTime = 1;
 //
 //static NSTimeInterval memoryCacheTime = 5*60;
-
-@implementation ServerAPIManager (Demo)
+//
+//static NSInteger sessionManagerConcurrency = 30;
+//
+//AFHTTPSessionManager *sessionManager;
+//AFSecurityPolicy *securityPolicy;
+//AFJSONResponseSerializer *jsonResponseSerializer;
+//AFHTTPResponseSerializer *httpResponseSerializer;
+//AFXMLParserResponseSerializer *xmlParserResponseSerializer;
+//AFJSONRequestSerializer *jsonRequestSerializer;
+//AFHTTPRequestSerializer *httpRequestSerializer;
 
 -(BOOL)fetchDataCacheWithAPI:(ServerAPI *)api completion:(sap_requestCompletion)completion error:(NSError*)error{
 //    YYCache *cache=[[YYCache alloc] initWithName:[api isKindOfClass:NSClassFromString(@"AnalyticsAPI")]?apiStatCacheName:apiCacheName];
@@ -56,31 +66,31 @@
 }
 
 -(void)requestDataWithAPI:(ServerAPI *)api completion:(sap_requestCompletion)completion progressHandle:(sap_progressHandle)progressHandle retryTimes:(NSInteger)retryTimes {
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    [self getSessionManager];
 //    
-//    [manager setSecurityPolicy:[AFSecurityPolicy defaultPolicy]];
-//    manager.requestSerializer.timeoutInterval = api.timeOut;
-//    [self addHttpHeaders:manager api:api];
-//    [self addRequestWithServerAPI:api];
+//    [sessionManager setSecurityPolicy:securityPolicy];
+//    sessionManager.requestSerializer.timeoutInterval = api.timeOut;
+//    [self addHttpHeaders:sessionManager api:api];
 //    
 //    switch (api.resultFormat) {
-//            case APIResultFormat_JSON:
-//            manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//        case APIResultFormat_JSON:
+//            sessionManager.responseSerializer = jsonResponseSerializer;
 //            break;
-//            case APIResultFormat_Data:
-//            manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//        case APIResultFormat_Data:
+//            sessionManager.responseSerializer = httpResponseSerializer;
 //            break;
-//            case APIResultFormat_XML:
-//            manager.responseSerializer = [AFXMLParserResponseSerializer serializer];
+//        case APIResultFormat_XML:
+//            sessionManager.responseSerializer = xmlParserResponseSerializer;
 //        default:
+//            sessionManager.responseSerializer = httpResponseSerializer;
 //            break;
 //    }
 //    
 //    if (api.completionQueue) {
-//        manager.completionQueue=api.completionQueue;
+//        sessionManager.completionQueue=api.completionQueue;
 //    }
 //    if (api.completionGroup) {
-//        manager.completionGroup=api.completionGroup;
+//        sessionManager.completionGroup=api.completionGroup;
 //    }
 //    if (api.completionGroup) {
 //        dispatch_group_enter(api.completionGroup);
@@ -94,117 +104,122 @@
 //    
 //    __block NSInteger tmpRetryTimes=retryTimes;
 //    
-//    switch (api.accessType) {
+//    @autoreleasepool {
+//        __block ServerAPI *copyApi=[api copy];
+//        
+//        [self addRequestWithServerAPI:copyApi];
+//        
+//        switch (copyApi.accessType) {
 //            case APIAccessType_Get:{
-//                api.originRequest=[manager GET:api.requestURL parameters:api.requestParameters progress:^(NSProgress * _Nonnull downloadProgress) {
+//                copyApi.originRequest=[sessionManager GET:copyApi.requestURL parameters:copyApi.requestParameters progress:^(NSProgress * _Nonnull downloadProgress) {
 //                } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//                    [api responseFormatWithData:responseObject error:nil completion:completion cacheData:nil];
+//                    [copyApi responseFormatWithData:responseObject error:nil completion:completion cacheData:nil];
 //                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 //                    if (error.code==NSURLErrorBadURL) {
 //                        if (tmpRetryTimes>0) {
 //                            tmpRetryTimes--;
-//                            [self requestDataWithAPI:api completion:completion progressHandle:progressHandle retryTimes:tmpRetryTimes];
+//                            [self requestDataWithAPI:copyApi completion:completion progressHandle:progressHandle retryTimes:tmpRetryTimes];
 //                            return ;
 //                        }
-//                        if (api.retryFilter) {
-//                            if (api.retryFilter()) {
-//                                [self requestDataWithAPI:api completion:completion progressHandle:progressHandle];
+//                        if (copyApi.retryFilter) {
+//                            if (copyApi.retryFilter()) {
+//                                [self requestDataWithAPI:copyApi completion:completion progressHandle:progressHandle];
 //                                return;
 //                            }
 //                        }
 //                    }
 //                    
-//                    if (api.shouldCache) {
-//                        if ([self fetchDataCacheWithAPI:api completion:completion error:error]) {
+//                    if (copyApi.shouldCache) {
+//                        if ([self fetchDataCacheWithAPI:copyApi completion:completion error:error]) {
 //                            return;
 //                        }
 //                    }
 //                    
-//                    [api responseFormatWithData:nil error:error completion:completion cacheData:nil];
+//                    [copyApi responseFormatWithData:nil error:error completion:completion cacheData:nil];
 //                }];
 //                
 //                break;
 //            }
 //            case APIAccessType_Post:{
-//                api.originRequest=[manager POST:api.requestURL parameters:api.requestParameters progress:^(NSProgress * _Nonnull uploadProgress) {
+//                copyApi.originRequest=[sessionManager POST:copyApi.requestURL parameters:copyApi.requestParameters progress:^(NSProgress * _Nonnull uploadProgress) {
 //                } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//                    [api responseFormatWithData:responseObject error:nil completion:completion cacheData:nil];
+//                    [copyApi responseFormatWithData:responseObject error:nil completion:completion cacheData:nil];
 //                    
 //                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 //                    if (error.code==NSURLErrorBadURL) {
 //                        if (tmpRetryTimes>0) {
 //                            tmpRetryTimes--;
-//                            [self requestDataWithAPI:api completion:completion progressHandle:progressHandle retryTimes:tmpRetryTimes];
+//                            [self requestDataWithAPI:copyApi completion:completion progressHandle:progressHandle retryTimes:tmpRetryTimes];
 //                            return ;
 //                        }
-//                        if (api.retryFilter) {
-//                            if (api.retryFilter()) {
-//                                [self requestDataWithAPI:api completion:completion progressHandle:progressHandle];
+//                        if (copyApi.retryFilter) {
+//                            if (copyApi.retryFilter()) {
+//                                [self requestDataWithAPI:copyApi completion:completion progressHandle:progressHandle];
 //                                return;
 //                            }
 //                        }
 //                    }
 //                    
-//                    if (api.shouldCache) {
-//                        if ([self fetchDataCacheWithAPI:api completion:completion error:error]) {
+//                    if (copyApi.shouldCache) {
+//                        if ([self fetchDataCacheWithAPI:copyApi completion:completion error:error]) {
 //                            return;
 //                        }
 //                    }
 //                    
-//                    [api responseFormatWithData:nil error:error completion:completion cacheData:nil];
+//                    [copyApi responseFormatWithData:nil error:error completion:completion cacheData:nil];
 //                }];
 //                
 //                break;
 //            }
 //            case APIAccessType_PostJSON:{
-//                api.originRequest=[manager POST:api.requestURL parameters:api.requestParameters progress:^(NSProgress * _Nonnull uploadProgress) {
+//                copyApi.originRequest=[sessionManager POST:copyApi.requestURL parameters:copyApi.requestParameters progress:^(NSProgress * _Nonnull uploadProgress) {
 //                } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//                    [api responseFormatWithData:responseObject error:nil completion:completion cacheData:nil];
+//                    [copyApi responseFormatWithData:responseObject error:nil completion:completion cacheData:nil];
 //                    
 //                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 //                    if (error.code==NSURLErrorBadURL) {
 //                        if (tmpRetryTimes>0) {
 //                            tmpRetryTimes--;
-//                            [self requestDataWithAPI:api completion:completion progressHandle:progressHandle retryTimes:tmpRetryTimes];
+//                            [self requestDataWithAPI:copyApi completion:completion progressHandle:progressHandle retryTimes:tmpRetryTimes];
 //                            return ;
 //                        }
-//                        if (api.retryFilter) {
-//                            if (api.retryFilter()) {
-//                                [self requestDataWithAPI:api completion:completion progressHandle:progressHandle];
+//                        if (copyApi.retryFilter) {
+//                            if (copyApi.retryFilter()) {
+//                                [self requestDataWithAPI:copyApi completion:completion progressHandle:progressHandle];
 //                                return;
 //                            }
 //                        }
 //                    }
 //                    
-//                    if (api.shouldCache) {
-//                        if ([self fetchDataCacheWithAPI:api completion:completion error:error]) {
+//                    if (copyApi.shouldCache) {
+//                        if ([self fetchDataCacheWithAPI:copyApi completion:completion error:error]) {
 //                            return;
 //                        }
 //                    }
 //                    
-//                    [api responseFormatWithData:nil error:error completion:completion cacheData:nil];
+//                    [copyApi responseFormatWithData:nil error:error completion:completion cacheData:nil];
 //                }];
 //                
 //                break;
 //            }
 //            case APIAccessType_Upload:{
-//                api.originRequest=[manager POST:api.requestURL parameters:api.requestParameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-//                    [formData appendPartWithFileData:[(BaseServerAPI*)api uploadData] name:[(BaseServerAPI*)api uploadFileName] fileName:[(BaseServerAPI*)api uploadFileName] mimeType:[(BaseServerAPI*)api uploadFileType]];
+//                copyApi.originRequest=[sessionManager POST:copyApi.requestURL parameters:copyApi.requestParameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//                    [formData appendPartWithFileData:[(BaseServerAPI*)copyApi uploadData] name:[(BaseServerAPI*)copyApi uploadFileName] fileName:[(BaseServerAPI*)copyApi uploadFileName] mimeType:[(BaseServerAPI*)copyApi uploadFileType]];
 //                    
 //                } progress:^(NSProgress * _Nonnull uploadProgress) {
 //                    if (progressHandle!=nil&&uploadProgress!=nil) {
 //                        progressHandle(1.*uploadProgress.totalUnitCount/uploadProgress.completedUnitCount);
 //                    }
 //                } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//                    [api responseFormatWithData:responseObject error:nil completion:completion cacheData:nil];
+//                    [copyApi responseFormatWithData:responseObject error:nil completion:completion cacheData:nil];
 //                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//                    [api responseFormatWithData:nil error:error completion:completion cacheData:nil];
+//                    [copyApi responseFormatWithData:nil error:error completion:completion cacheData:nil];
 //                }];
 //                break;
 //            }
 //            case APIAccessType_Download:{
-//                NSURLRequest*request = [NSURLRequest requestWithURL:[NSURL URLWithString:api.fullRequestURL]];
-//                api.originRequest=[manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+//                NSURLRequest*request = [NSURLRequest requestWithURL:[NSURL URLWithString:copyApi.fullRequestURL]];
+//                copyApi.originRequest=[sessionManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
 //                    if (progressHandle!=nil&&downloadProgress!=nil) {
 //                        progressHandle(1.*downloadProgress.totalUnitCount/downloadProgress.completedUnitCount);
 //                    }
@@ -213,20 +228,21 @@
 //                    return [NSURL fileURLWithPath:path];
 //                } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
 //                    NSData *fileData=[NSData dataWithContentsOfURL:filePath];
-//                    NSString *downloadPath=[(BaseServerAPI*)api downloadFilePath];
+//                    NSString *downloadPath=[(BaseServerAPI*)copyApi downloadFilePath];
 //                    if ([[NSFileManager defaultManager] fileExistsAtPath:downloadPath]) {
 //                        [[NSFileManager defaultManager] removeItemAtPath:downloadPath error:nil];
 //                    }
 //                    [fileData writeToFile:downloadPath atomically:NO];
 //                    [[NSFileManager defaultManager] removeItemAtPath:filePath.path error:nil];
-//                    [api responseFormatWithData:fileData error:error completion:completion cacheData:nil];
+//                    [copyApi responseFormatWithData:fileData error:error completion:completion cacheData:nil];
 //                    
 //                }];
-//                [api.originRequest resume];
+//                [copyApi.originRequest resume];
 //                break;
 //            }
-//        default:
-//            break;
+//            default:
+//                break;
+//        }
 //    }
 }
 
@@ -239,21 +255,78 @@
 #pragma mark - 加密
 //-(void)addHttpHeaders:(AFHTTPSessionManager*)manager api:(ServerAPI*)api{
 //    switch (api.accessType) {
-//            case APIAccessType_PostJSON:
-//            manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//        case APIAccessType_PostJSON:
+//            manager.requestSerializer = jsonRequestSerializer;
 //            [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 //            break;
 //            
 //        default:
+//            manager.requestSerializer = httpRequestSerializer;
 //            break;
 //    }
 //    
-//    //加密需要放入hedaer--begin--
-
-//    //加密需要放入hedaer--end--
 //    
+//}
+
+#pragma mark - AFNetWorking 对象创建条件优化
+//-(AFHTTPSessionManager*)getSessionManager{
+//    if (!sessionManager||self.apiRequestIDs.count>sessionManagerConcurrency) {
+//        sessionManager = [AFHTTPSessionManager manager];
+//    }
+//    
+//    [self getSecurityPolicy];
+//    [self getHttpResponseSerializer];
+//    [self getJsonResponseSerializer];
+//    [self getXmlParserResponseSerializer];
+//    [self getJsonRequestSerializer];
+//    [self getHttpRequestSerializer];
+//    
+//    sessionManager.completionQueue=nil;
+//    sessionManager.completionGroup=nil;
+//    
+//    return sessionManager;
+//}
 //
+//-(AFSecurityPolicy*)getSecurityPolicy{
+//    if (!securityPolicy||self.apiRequestIDs.count>sessionManagerConcurrency) {
+//        securityPolicy = [AFSecurityPolicy defaultPolicy];
+//    }
+//    return securityPolicy;
+//}
 //
+//-(AFJSONResponseSerializer*)getJsonResponseSerializer{
+//    if (!jsonResponseSerializer||self.apiRequestIDs.count>sessionManagerConcurrency) {
+//        jsonResponseSerializer = [AFJSONResponseSerializer serializer];
+//    }
+//    return jsonResponseSerializer;
+//}
+//
+//-(AFHTTPResponseSerializer*)getHttpResponseSerializer{
+//    if (!httpResponseSerializer||self.apiRequestIDs.count>sessionManagerConcurrency) {
+//        httpResponseSerializer = [AFHTTPResponseSerializer serializer];
+//    }
+//    return httpResponseSerializer;
+//}
+//
+//-(AFXMLParserResponseSerializer*)getXmlParserResponseSerializer{
+//    if (!xmlParserResponseSerializer||self.apiRequestIDs.count>sessionManagerConcurrency) {
+//        xmlParserResponseSerializer = [AFXMLParserResponseSerializer serializer];
+//    }
+//    return xmlParserResponseSerializer;
+//}
+//
+//-(AFJSONRequestSerializer*)getJsonRequestSerializer{
+//    if (!jsonRequestSerializer||self.apiRequestIDs.count>sessionManagerConcurrency) {
+//        jsonRequestSerializer = [AFJSONRequestSerializer serializer];
+//    }
+//    return jsonRequestSerializer;
+//}
+//
+//-(AFHTTPRequestSerializer*)getHttpRequestSerializer{
+//    if (!httpRequestSerializer||self.apiRequestIDs.count>sessionManagerConcurrency) {
+//        httpRequestSerializer = [AFHTTPRequestSerializer serializer];
+//    }
+//    return httpRequestSerializer;
 //}
 
 @end

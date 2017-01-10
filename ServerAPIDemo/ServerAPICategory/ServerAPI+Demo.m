@@ -12,7 +12,6 @@
 
 @implementation ServerAPI (Demo)
 
-
 NSDate *_endDate;
 
 -(NSDate *)endDate{
@@ -33,11 +32,20 @@ NSDate *_endDate;
         
         if (data!=nil) {
             result.originData=data;
-            
-            if (self.returnClass!=nil) {
-                
-//                result.formatData=[self.returnClass yy_modelWithJSON:data];
-            }
+//            ErrorInfo *serverError=[ErrorInfo yy_modelWithJSON:data];
+//            
+//            if (self.returnClass!=nil) {
+//                
+//                if (serverError==OK) {
+//                    result.formatData=[self.returnClass yy_modelWithJSON:data];
+//                }
+//            }
+//            
+//            if (serverError.error_code!=OK) {
+//                result.formatData=xgoodsError;
+//                result.status=ServerResultStatus_ErrorServerAPI;
+//                [serverError errorBaseToDo];
+//            }
             
         }
         
@@ -84,6 +92,10 @@ NSDate *_endDate;
 //
 //- (id)initWithCoder:(NSCoder *)aDecoder {
 //    return [self yy_modelInitWithCoder:aDecoder];
+//}
+//
+//- (id)copyWithZone:(NSZone *)zone {
+//    return [self yy_modelCopy];
 //}
 
 @end
