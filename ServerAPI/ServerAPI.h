@@ -113,6 +113,13 @@ extern NSString *const UnkownRequestAPITag;
 @property(nonatomic,strong)dispatch_queue_t completionQueue;
 
 /**
+ AFNetWorking sessionManager 默认都是创建没有单例模式 用了单例completionQueue则会赋值混乱
+ completionQueue 针对 sessionManager当多线程同时设置时容易混乱，不开启将每次都根据queue label拿对应的manager如果没有则创建且不自动释放销毁，开启后每次都创建新的自动释放销毁
+ */
+@property(nonatomic,assign)BOOL autoNewManager;
+
+
+/**
  统一处理队列完成后事件 传入 如：dispatch_group_create();
                    使用 ：  dispatch_group_notify(completionGroup, dispatch_get_global_queue(0,0), ^{
                                 //所有请求完成后要做的事

@@ -22,6 +22,8 @@
 //static NSInteger sessionManagerConcurrency = 30;
 //
 //AFHTTPSessionManager *sessionManager;
+//NSMutableDictionary *sessionManagerDic;
+
 //AFSecurityPolicy *securityPolicy;
 //AFJSONResponseSerializer *jsonResponseSerializer;
 //AFHTTPResponseSerializer *httpResponseSerializer;
@@ -68,29 +70,51 @@
 -(void)requestDataWithAPI:(ServerAPI *)api completion:(sap_requestCompletion)completion progressHandle:(sap_progressHandle)progressHandle retryTimes:(NSInteger)retryTimes {
 //    [self getSessionManager];
 //    
-//    [sessionManager setSecurityPolicy:securityPolicy];
-//    sessionManager.requestSerializer.timeoutInterval = api.timeOut;
-//    [self addHttpHeaders:sessionManager api:api];
+//    AFHTTPSessionManager *tmpSessionManager=sessionManager;
+//    if (![NSThread isMainThread]&&(api.completionQueue||api.completionGroup)) {
+//        if (api.completionQueue) {
+//            if (api.autoNewManager) {
+//                tmpSessionManager=[AFHTTPSessionManager manager];
+//            }
+//            else{
+//                NSString *queueLabel=[[NSString alloc] initWithUTF8String:dispatch_queue_get_label(api.completionQueue)];
+//                if (sessionManagerDic[queueLabel]) {
+//                    tmpSessionManager=sessionManagerDic[queueLabel];
+//                }
+//                else{
+//                    tmpSessionManager=[AFHTTPSessionManager manager];
+//                    sessionManagerDic[queueLabel]=tmpSessionManager;
+//                }
+//            }
+//        }
+//        else{
+//            tmpSessionManager=[AFHTTPSessionManager manager];
+//        }
+//    }
+//    
+//    [tmpSessionManager setSecurityPolicy:securityPolicy];
+//    tmpSessionManager.requestSerializer.timeoutInterval = api.timeOut;
+//    [self addHttpHeaders:tmpSessionManager api:api];
 //    
 //    switch (api.resultFormat) {
 //        case APIResultFormat_JSON:
-//            sessionManager.responseSerializer = jsonResponseSerializer;
+//            tmpSessionManager.responseSerializer = jsonResponseSerializer;
 //            break;
 //        case APIResultFormat_Data:
-//            sessionManager.responseSerializer = httpResponseSerializer;
+//            tmpSessionManager.responseSerializer = httpResponseSerializer;
 //            break;
 //        case APIResultFormat_XML:
-//            sessionManager.responseSerializer = xmlParserResponseSerializer;
+//            tmpSessionManager.responseSerializer = xmlParserResponseSerializer;
 //        default:
-//            sessionManager.responseSerializer = httpResponseSerializer;
+//            tmpSessionManager.responseSerializer = httpResponseSerializer;
 //            break;
 //    }
 //    
 //    if (api.completionQueue) {
-//        sessionManager.completionQueue=api.completionQueue;
+//        tmpSessionManager.completionQueue=api.completionQueue;
 //    }
 //    if (api.completionGroup) {
-//        sessionManager.completionGroup=api.completionGroup;
+//        tmpSessionManager.completionGroup=api.completionGroup;
 //    }
 //    if (api.completionGroup) {
 //        dispatch_group_enter(api.completionGroup);
@@ -111,7 +135,7 @@
 //        
 //        switch (copyApi.accessType) {
 //            case APIAccessType_Get:{
-//                copyApi.originRequest=[sessionManager GET:copyApi.requestURL parameters:copyApi.requestParameters progress:^(NSProgress * _Nonnull downloadProgress) {
+//                copyApi.originRequest=[tmpSessionManager GET:copyApi.requestURL parameters:copyApi.requestParameters progress:^(NSProgress * _Nonnull downloadProgress) {
 //                } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //                    [copyApi responseFormatWithData:responseObject error:nil completion:completion cacheData:nil];
 //                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -141,7 +165,7 @@
 //                break;
 //            }
 //            case APIAccessType_Post:{
-//                copyApi.originRequest=[sessionManager POST:copyApi.requestURL parameters:copyApi.requestParameters progress:^(NSProgress * _Nonnull uploadProgress) {
+//                copyApi.originRequest=[tmpSessionManager POST:copyApi.requestURL parameters:copyApi.requestParameters progress:^(NSProgress * _Nonnull uploadProgress) {
 //                } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //                    [copyApi responseFormatWithData:responseObject error:nil completion:completion cacheData:nil];
 //                    
@@ -172,7 +196,7 @@
 //                break;
 //            }
 //            case APIAccessType_PostJSON:{
-//                copyApi.originRequest=[sessionManager POST:copyApi.requestURL parameters:copyApi.requestParameters progress:^(NSProgress * _Nonnull uploadProgress) {
+//                copyApi.originRequest=[tmpSessionManager POST:copyApi.requestURL parameters:copyApi.requestParameters progress:^(NSProgress * _Nonnull uploadProgress) {
 //                } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //                    [copyApi responseFormatWithData:responseObject error:nil completion:completion cacheData:nil];
 //                    
@@ -203,8 +227,8 @@
 //                break;
 //            }
 //            case APIAccessType_Upload:{
-//                copyApi.originRequest=[sessionManager POST:copyApi.requestURL parameters:copyApi.requestParameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-//                    [formData appendPartWithFileData:[(BaseServerAPI*)copyApi uploadData] name:[(BaseServerAPI*)copyApi uploadFileName] fileName:[(BaseServerAPI*)copyApi uploadFileName] mimeType:[(BaseServerAPI*)copyApi uploadFileType]];
+//                copyApi.originRequest=[tmpSessionManager POST:copyApi.requestURL parameters:copyApi.requestParameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//                    [formData appendPartWithFileData:[(ServerAPI*)copyApi uploadData] name:[(ServerAPI*)copyApi uploadFileName] fileName:[(ServerAPI*)copyApi uploadFileName] mimeType:[(ServerAPI*)copyApi uploadFileType]];
 //                    
 //                } progress:^(NSProgress * _Nonnull uploadProgress) {
 //                    if (progressHandle!=nil&&uploadProgress!=nil) {
@@ -219,7 +243,7 @@
 //            }
 //            case APIAccessType_Download:{
 //                NSURLRequest*request = [NSURLRequest requestWithURL:[NSURL URLWithString:copyApi.fullRequestURL]];
-//                copyApi.originRequest=[sessionManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+//                copyApi.originRequest=[tmpSessionManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
 //                    if (progressHandle!=nil&&downloadProgress!=nil) {
 //                        progressHandle(1.*downloadProgress.totalUnitCount/downloadProgress.completedUnitCount);
 //                    }
@@ -228,7 +252,7 @@
 //                    return [NSURL fileURLWithPath:path];
 //                } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
 //                    NSData *fileData=[NSData dataWithContentsOfURL:filePath];
-//                    NSString *downloadPath=[(BaseServerAPI*)copyApi downloadFilePath];
+//                    NSString *downloadPath=[(ServerAPI*)copyApi downloadFilePath];
 //                    if ([[NSFileManager defaultManager] fileExistsAtPath:downloadPath]) {
 //                        [[NSFileManager defaultManager] removeItemAtPath:downloadPath error:nil];
 //                    }
@@ -250,7 +274,9 @@
     [(NSURLSessionTask*)api.originRequest cancel];
 }
 
-
+//-(void)removeSessionManagerWithQueueLabel:(NSString*)queueLabel{
+//    [sessionManagerDic removeObjectForKey:queueLabel];
+//}
 
 #pragma mark - 加密
 //-(void)addHttpHeaders:(AFHTTPSessionManager*)manager api:(ServerAPI*)api{
@@ -273,7 +299,10 @@
 //    if (!sessionManager||self.apiRequestIDs.count>sessionManagerConcurrency) {
 //        sessionManager = [AFHTTPSessionManager manager];
 //    }
-//    
+//
+//    if (!sessionManagerDic) {
+//        sessionManagerDic=[[NSMutableDictionary alloc] init];
+//    }
 //    [self getSecurityPolicy];
 //    [self getHttpResponseSerializer];
 //    [self getJsonResponseSerializer];
