@@ -23,7 +23,7 @@
 //
 //AFHTTPSessionManager *sessionManager;
 //NSMutableDictionary *sessionManagerDic;
-
+//
 //AFSecurityPolicy *securityPolicy;
 //AFJSONResponseSerializer *jsonResponseSerializer;
 //AFHTTPResponseSerializer *httpResponseSerializer;
@@ -299,10 +299,10 @@
 //    if (!sessionManager||self.apiRequestIDs.count>sessionManagerConcurrency) {
 //        sessionManager = [AFHTTPSessionManager manager];
 //    }
-//
 //    if (!sessionManagerDic) {
 //        sessionManagerDic=[[NSMutableDictionary alloc] init];
 //    }
+//    
 //    [self getSecurityPolicy];
 //    [self getHttpResponseSerializer];
 //    [self getJsonResponseSerializer];

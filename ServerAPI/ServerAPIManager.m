@@ -43,14 +43,14 @@ static ServerAPIManager *sharedInstanceServerAPIManager=nil;
 }
 
 -(void)addRequestWithServerAPI:(ServerAPI*)api{
-    if (api) {
-        [self.apiRequests setValue:api forKey:api.requestID];
+    if (api&&api.requestID) {
+        [self.apiRequests setObject:api forKey:api.requestID];
         [self.apiRequestIDs addObject:api.requestID];
     }
 }
 
 -(void)removeRequestWithServerAPI:(ServerAPI*)api{
-    if (api) {
+    if (api&&api.requestID) {
         [self.apiRequests removeObjectForKey:api.requestID];
         [self.apiRequestIDs removeObject:api.requestID];
     }

@@ -15,8 +15,6 @@
 <
 ServerAPIManagerRequestProtocol
 ,ServerAPIManagerCacheProtocol
-//,NSCoding
-//,NSCopying
 >
 
 //-(void)removeSessionManagerWithQueueLabel:(NSString*)queueLabel;

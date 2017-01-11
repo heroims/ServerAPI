@@ -108,9 +108,17 @@ extern NSString *const UnkownRequestAPITag;
  请求队列 传入 如：dispatch_queue_create("xxx.serial", DISPATCH_QUEUE_SERIAL)  串行队列
             dispatch_queue_create("xxx.concurrent", DISPATCH_QUEUE_CONCURRENT)  并发队列
             dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) 系统生成的并发队列
-            设置后回调block将不阻塞主线程
+            AFNetWorking 设置后回调block将不阻塞主线程
  */
 @property(nonatomic,strong)dispatch_queue_t completionQueue;
+
+
+/**
+ AFNetWorking sessionManager 默认都是创建没有单例模式 用了单例completionQueue则会赋值混乱
+ completionQueue 针对 sessionManager当多线程同时设置时容易混乱不开启将每次都根据queue label拿对应的manager如果没有则创建且不自动释放销毁，开启后每次都创建新的自动释放销毁
+ */
+@property(nonatomic,assign)BOOL autoNewManager;
+
 
 /**
  AFNetWorking sessionManager 默认都是创建没有单例模式 用了单例completionQueue则会赋值混乱

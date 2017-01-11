@@ -107,34 +107,27 @@ NSString *const UnkownRequestAPITag = @"UnkownTag";
 
 -(NSString *)fullRequestURL{
     NSString *_fullRequestURL=nil;
-
+    
     if ([self.fullRequestPath hasPrefix:@"/"]||[self.requestHost hasSuffix:@"/"]) {
-        _fullRequestURL=[NSString stringWithFormat:@"%@%@",self.requestHost,self.fullRequestPath];
+        _fullRequestURL=[NSString stringWithFormat:@"%@%@",self.requestHost?self.requestHost:@"",self.fullRequestPath];
     }
     else{
-        _fullRequestURL=[NSString stringWithFormat:@"%@/%@",self.requestHost,self.fullRequestPath];
+        _fullRequestURL=[NSString stringWithFormat:@"%@/%@",self.requestHost?self.requestHost:@"",self.fullRequestPath];
     }
     return _fullRequestURL;
 }
 
 -(NSString *)fullRequestPath{
-    NSString *_fullRequestPath=self.requestPath;
+    NSString *_fullRequestPath=self.requestPath?self.requestPath:@"";
     for (NSString *pathParameterKey in self.requestPathParameters.allKeys) {
         [_fullRequestPath stringByReplacingOccurrencesOfString:pathParameterKey withString:self.requestPathParameters[pathParameterKey]];
     }
     for (NSString *parameterKey in _requestParameters.allKeys) {
-        //有时候系统自动调用descriptionWithLocale做string转换会失败导致stringWithFormat直接crash。。。所以加try catch
-        @try {
-            if (![_fullRequestPath containsString:@"?"]) {
-                _fullRequestPath=[NSString stringWithFormat:@"%@?%@=%@",_fullRequestPath,parameterKey,self.requestParameters[parameterKey]];
-            }
-            else{
-                _fullRequestPath=[NSString stringWithFormat:@"%@&%@=%@",_fullRequestPath,parameterKey,self.requestParameters[parameterKey]];
-            }
-        } @catch (NSException *exception) {
-            
-        } @finally {
-            
+        if (![_fullRequestPath containsString:@"?"]) {
+            _fullRequestPath=[NSString stringWithFormat:@"%@?%@=%@",_fullRequestPath,parameterKey?parameterKey:@"",self.requestParameters[parameterKey]?self.requestParameters[parameterKey]:@""];
+        }
+        else{
+            _fullRequestPath=[NSString stringWithFormat:@"%@&%@=%@",_fullRequestPath,parameterKey?parameterKey:@"",self.requestParameters[parameterKey]?self.requestParameters[parameterKey]:@""];
         }
     }
     return _fullRequestPath;
@@ -147,15 +140,15 @@ NSString *const UnkownRequestAPITag = @"UnkownTag";
     
     NSString *requestURL=nil;
     if ([self.fullRequestPath hasPrefix:@"/"]||[self.requestHost hasSuffix:@"/"]) {
-        requestURL=[NSString stringWithFormat:@"%@%@",self.requestHost,self.requestPath];
+        requestURL=[NSString stringWithFormat:@"%@%@",self.requestHost?self.requestHost:@"",self.requestPath];
     }
     else{
-        requestURL=[NSString stringWithFormat:@"%@/%@",self.requestHost,self.requestPath];
+        requestURL=[NSString stringWithFormat:@"%@/%@",self.requestHost?self.requestHost:@"",self.requestPath];
     }
     for (NSString *pathParameterKey in self.requestPathParameters.allKeys) {
         requestURL=[requestURL stringByReplacingOccurrencesOfString:pathParameterKey withString:self.requestPathParameters[pathParameterKey]];
     }
-
+    
     return requestURL;
 }
 
