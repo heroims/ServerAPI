@@ -46,6 +46,16 @@
         
     }];
 
+    //重复使用内部不会混乱 前提category自己实现的没问题，这块可参考demo写法
+    for (NSInteger i=0; i<10; i++) {
+        ServerAPI *subUrlAPI=[[ServerAPI alloc] init];
+        subUrlAPI.requestURL=@"http://xxx.xxx.xxx";
+        subUrlAPI.requestTag=NSStringFromClass([self class]);
+        NSLog(@"start requestID:%@",subUrlAPI.requestID);
+        [subUrlAPI requestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
+            NSLog(@"end requestID:%@",result.api.requestID);
+        }];
+    }
     // Do any additional setup after loading the view, typically from a nib.
 }
 
