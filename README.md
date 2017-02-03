@@ -164,7 +164,7 @@ requestDataWithAPI里面去写对应的请求发起包括用不用一个NSURLSes
         
     }];
 
-    //集约型API使用  可以直接类扩展加静态方法设置
+    //集约型API使用  可以直接类扩展加静态方法设置，可以自行类扩展个更简洁通用的方法这里只距离
     ServerAPI *intensiveAPI=[[ServerAPI alloc] init];
     intensiveAPI.requestHost=@"http://xxx.xxx.xxx";
     intensiveAPI.requestPath=@"xxx";
