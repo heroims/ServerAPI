@@ -1,6 +1,6 @@
 # ServerAPI
 ## 快速集成的网络架构
-####这个项目体现的是一个框架思想，只是提供了框架，缓存和网络请求根据项目需求随意更换
+###这个项目体现的是一个框架思想，只是提供了框架，缓存和网络请求根据项目需求随意更换
 通过Category完成对个人项目的定制
 ServerAPI创建Category需要实现ServerAPIResponseProtocol的协议，这个协议主要实现对请求返回的数据格式化详见demo
 ```Objective-C
@@ -150,7 +150,7 @@ requestDataWithAPI里面去写对应的请求发起包括用不用一个NSURLSes
 ```
 其中fetchDataCacheWithAPI调用在requestDataWithAPI里写而saveDataCacheWithResult调用在responseFormatWithData里写
 上边的这些就是对请求的整体定制化，至于属性添加，就直接runtime吧
-####体现了集约型和离散型网络架构的结合
+###体现了集约型和离散型网络架构的结合
 ```Objective-C
     //离散型API使用
     [NSClassFromString(@"DemoAPI") newRequestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
