@@ -157,7 +157,7 @@ requestDataWithAPI里面去写对应的请求发起包括用不用一个NSURLSes
         
     } requestTag:NSStringFromClass([self class])];
     
-    BaseServerAPI *discreteApi=[[NSClassFromString(@"DemoAPI") alloc] init];
+    ServerAPI *discreteApi=[[NSClassFromString(@"DemoAPI") alloc] init];
     discreteApi.requestParameters=nil;
     discreteApi.requestTag=NSStringFromClass([self class]);
     [discreteApi requestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
