@@ -152,10 +152,10 @@ requestDataWithAPI里面去写对应的请求发起包括用不用一个NSURLSes
 上边的这些就是对请求的整体定制化，至于属性添加，就直接runtime吧
 ###体现了集约型和离散型网络架构的结合
 ```Objective-C
-    //离散型API使用
-    [NSClassFromString(@"DemoAPI") newRequestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
+    //离散型API使用  一个请求是一个API类，用NSClassFromString主要为了省头文件引用懒得加头文件。。。           
+    [NSClassFromString(@"DemoAPI") newRequestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
         
-    } requestTag:NSStringFromClass([self class])];
+    } requestParameters:nil requestTag:NSStringFromClass([self class])];
     
     ServerAPI *discreteApi=[[NSClassFromString(@"DemoAPI") alloc] init];
     discreteApi.requestParameters=nil;
@@ -164,12 +164,17 @@ requestDataWithAPI里面去写对应的请求发起包括用不用一个NSURLSes
         
     }];
 
-    //集约型API使用  可以直接类扩展加静态方法设置
-    ServerAPI *intensiveAPI=[[ServerAPI alloc] init];
+    //集约型API使用  可以直接类扩展加静态方法设置
+    ServerAPI *intensiveAPI=[[ServerAPI alloc] init];
     intensiveAPI.requestHost=@"http://xxx.xxx.xxx";
-    intensiveAPI.requestParameters=nil;
+    intensiveAPI.requestPath=@"xxx";
+    intensiveAPI.requestParameters=nil;
     intensiveAPI.requestTag=NSStringFromClass([self class]);
-    [intensiveAPI requestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
+    intensiveAPI.accessType=APIAccessType_Get;
+    intensiveAPI.resultFormat=APIResultFormat_JSON;
+    intensiveAPI.timeOut=30;
+    intensiveAPI.retryTimes=2;
+    [intensiveAPI requestDataWithCompletion:^(ServerResult *result, NSError *errInfo) {
         
     }];
     
