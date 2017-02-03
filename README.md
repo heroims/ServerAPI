@@ -35,8 +35,7 @@ ServerAPI创建Category需要实现ServerAPIResponseProtocol的协议，这个�
 
 @end
 ```
-顺便说一下responseCustomDoInCategoryWithResult的使用可以在继承ServerAPI的DemoAPI上做Category这样侵入性才最小
-
+顺便说一下responseCustomDoInCategoryWithResult的使用可以在继承ServerAPI的DemoAPI上做Category这样侵入性才最小，针对不同的API做不同的业务逻辑
 
 ServerAPIManager创建Category需要实现ServerAPIManagerRequestProtocol的协议
 ```Objective-C
@@ -113,7 +112,44 @@ ServerAPIManager创建Category需要实现ServerAPIManagerRequestProtocol的协�
 
 @end
 ```
+requestDataWithAPI里面去写对应的请求发起包括用不用一个NSURLSession各种请求定制在这完成
+还有ServerAPIManagerCacheProtocol这个协议则是管理缓存逻辑可以不去实现也可以实现
+```Objective-C
+@protocol ServerAPIManagerCacheProtocol <NSObject>
 
+@optional
+
+/**
+ 拉取缓存数据
+
+ @param api 请求描述的ServerAPI
+ @param completion 请求回调
+ @param error 错误信息
+ @return 缓存有无
+ */
+-(BOOL)fetchDataCacheWithAPI:(ServerAPI*)api completion:(sap_requestCompletion)completion error:(NSError*)error;
+
+/**
+ 拉取缓存数据
+
+ @param api 请求描述的ServerAPI
+ @param successHandle 请求成功回调
+ @param failHandle 请求失败回调
+ @param error 错误信息
+ @return 缓存有无
+ */
+-(BOOL)fetchDataCacheWithAPI:(ServerAPI*)api successHandle:(sap_requestCompletion)successHandle failHandle:(sap_requestFailHandle)failHandle error:(NSError*)error;
+
+/**
+ 保存缓存
+
+ @param api 请求描述的ServerAPI
+ */
+-(void)saveDataCacheWithResult:(ServerAPI*)api;
+@end
+```
+其中fetchDataCacheWithAPI调用在requestDataWithAPI里写而saveDataCacheWithResult调用在responseFormatWithData里写
+上边的这些就是对请求的整体定制化，至于属性添加，就直接runtime吧
 ####体现了集约型和离散型网络架构的结合
 ```Objective-C
     //离散型API使用
