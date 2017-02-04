@@ -64,9 +64,11 @@ static ServerAPIManager *sharedInstanceServerAPIManager=nil;
 }
 
 -(void)cancelRequestWithRequestsTag:(NSString*)requestsTag{
-    for (ServerAPI *api in self.apiRequests.allValues) {
-        if ([api.requestTag isEqualToString:requestsTag]) {
-            [self cancelRequestWithAPI:api];
+    if (requestsTag) {
+        for (ServerAPI *api in self.apiRequests.allValues) {
+            if (api.requestTag&&[api.requestTag isEqualToString:requestsTag]) {
+                [self cancelRequestWithAPI:api];
+            }
         }
     }
 }
