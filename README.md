@@ -1,5 +1,8 @@
 # ServerAPI
 ## 快速集成的网络架构
+为了方便自动化产出ServerAPI提供了
+https://github.com/heroims/ServerAPICreator
+这是可以自动话完成创建的工具
 ###这个项目体现的是一个框架思想，只是提供了框架，缓存和网络请求根据项目需求随意更换
 通过Category完成对个人项目的定制
 ServerAPI创建Category需要实现ServerAPIResponseProtocol的协议，这个协议主要实现对请求返回的数据格式化详见demo
