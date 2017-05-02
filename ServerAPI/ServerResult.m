@@ -8,6 +8,12 @@
 
 #import "ServerResult.h"
 
+NSInteger ServerError_NoError=-99999;
+
+@implementation ServerError
+
+@end
+
 @implementation ServerResult
 
 -(void)setError:(NSError *)error{
@@ -18,6 +24,11 @@
     else{
         _status=ServerResultStatus_ErrorNoNetwork;
     }
+}
+
+-(void)setServerError:(ServerError *)serverError{
+    _serverError=serverError;
+    _status=ServerResultStatus_ErrorServerAPI;
 }
 
 @end

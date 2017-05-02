@@ -94,4 +94,5 @@ static ServerAPIManager *sharedInstanceServerAPIManager=nil;
     ServerAPI *api=self.apiRequests[self.apiRequestIDs.firstObject];
     [self cancelRequestWithAPI:api];
 }
+
 @end

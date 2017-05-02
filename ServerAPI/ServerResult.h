@@ -17,6 +17,19 @@ typedef enum ServerResultStatus:NSInteger{
     ServerResultStatus_ErrorServerAPI,//服务器错误，在实现responseFormatWithData协议时根据个人需求设置此状态
 }ServerResultStatus;
 
+extern NSInteger ServerError_NoError;
+
+@interface ServerError : NSObject
+
+@property(nonatomic,assign)NSInteger errorCode;
+@property(nonatomic,strong)NSString *errorCodeDescribe;//错误描述
+
+@property(nonatomic,strong)NSString *errorMessage;//错误提示
+
+@property(nonatomic,strong)id originError;
+
+@end
+
 @interface ServerResult : NSObject
 
 @property(nonatomic,strong)id originData;
@@ -25,6 +38,7 @@ typedef enum ServerResultStatus:NSInteger{
 @property(nonatomic,assign)ServerResultStatus status;
 
 @property(nonatomic,strong)NSError *error;//传入error会自动改变status
+@property(nonatomic,strong)ServerError *serverError;//传入error会自动改变status
 
 @property(nonatomic,strong)ServerAPI *api;
 
