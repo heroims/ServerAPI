@@ -114,6 +114,28 @@ ServerAPIManager创建Category需要实现ServerAPIManagerRequestProtocol的协�
 -(void)cancelFirstRequest;
 
 @end
+
+@protocol ServerErrorFormatProtocol <NSObject>
+
+/**
+初始化服务器错误实体
+
+@param data 服务器错误数据源
+@return 服务器错误实体
+*/
+-(ServerError*)initFormatServerErrorWithData:(id)data;
+
+@end
+
+@protocol ServerErrorBaseToDoProtocol <NSObject>
+
+
+/**
+服务器错误基础处理
+*/
+-(void)serverErrorBaseToDo;
+
+@end
 ```
 requestDataWithAPI里面去写对应的请求发起包括用不用一个NSURLSession各种请求定制在这完成
 还有ServerAPIManagerCacheProtocol这个协议则是管理缓存逻辑可以不去实现也可以实现
@@ -202,7 +224,7 @@ Create Podfile:-
 ````
 $ edit Podfile
 platform :ios, '7.0'
-pod 'ServerAPI',  '~> 1.0.0'
+pod 'ServerAPI',  '~> 1.0'
 $ pod install
 ````
 Use the Xcode workspace instead of the project from now on.
