@@ -9,6 +9,7 @@
 //通过Category对ServerAPI实现对应的协议
 
 @class ServerAPI;
+@class ServerResult;
 @class ServerError;
 
 typedef void  (^sap_requestFailHandle)(ServerResult *result, NSError* errInfo);
