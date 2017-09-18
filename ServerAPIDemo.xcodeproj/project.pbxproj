@@ -24,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8483A0A11F6F93ED003E0EC2 /* ServerAPI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = ServerAPI.podspec; sourceTree = SOURCE_ROOT; };
 		D8B48EC71E116DDC0075A689 /* ServerAPIDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServerAPIDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8B48ECB1E116DDC0075A689 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D8B48ECD1E116DDC0075A689 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -84,6 +85,7 @@
 		D8B48EC91E116DDC0075A689 /* ServerAPIDemo */ = {
 			isa = PBXGroup;
 			children = (
+				8483A0A11F6F93ED003E0EC2 /* ServerAPI.podspec */,
 				D8B48F481E1AC2160075A689 /* ServerAPIs */,
 				D8B48F351E1AA1A00075A689 /* ServerAPICategory */,
 				D8B48F281E11722A0075A689 /* ServerAPI */,
