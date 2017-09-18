@@ -103,6 +103,11 @@ extern NSString *const UnkownRequestAPITag;
  */
 @property(nonatomic,strong)NSDictionary *requestParameters;
 
+/**
+ 请求参数 内部有自动转换机制 会从url和传入的requestParameters里做结合给出完整的请求参数 
+ ps:解决host或url直接设置为http://xxx.xxx.xxx?xxx=xxx&&xxx=xxx 然后传入requestParameters，同时利用requestParameters做加密然后获取参数不全的问题
+ */
+@property(nonatomic,readonly)NSDictionary *requestAllParameters;
 
 /**
  请求队列 传入 如：dispatch_queue_create("xxx.serial", DISPATCH_QUEUE_SERIAL)  串行队列

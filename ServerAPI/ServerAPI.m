@@ -152,6 +152,23 @@ NSString *const UnkownRequestAPITag = @"UnkownTag";
     return requestURL;
 }
 
+-(NSDictionary *)requestAllParameters{
+    NSMutableDictionary *tmpRequestParameters=[NSMutableDictionary dictionaryWithDictionary:_requestParameters];
+    NSArray *tmpUrlQuery=[self.requestURL componentsSeparatedByString:@"?"];
+    if (tmpUrlQuery.count>1) {
+        NSArray *tmpQuery=[tmpUrlQuery[1] componentsSeparatedByString:@"&"];
+        for (NSString *keyValueString in tmpQuery) {
+            NSArray *tmpKeyValue=[keyValueString componentsSeparatedByString:@"="];
+            if (tmpKeyValue.count>1) {
+                if (tmpRequestParameters[tmpKeyValue[0]]==nil) {
+                    [tmpRequestParameters setObject:tmpKeyValue[1] forKey:tmpKeyValue[0]];
+                }
+            }
+        }
+    }
+    return [NSDictionary dictionaryWithDictionary:tmpRequestParameters];
+}
+
 -(NSDate *)startDate{
     return _startDate;
 }
