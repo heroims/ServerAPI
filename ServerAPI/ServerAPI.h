@@ -115,8 +115,11 @@ extern NSString *const UnkownRequestAPITag;
             dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) 系统生成的并发队列
             AFNetWorking 设置后回调block将不阻塞主线程
  */
+#if OS_OBJECT_USE_OBJC
 @property(nonatomic,strong)dispatch_queue_t completionQueue;
-
+#else
+@property(nonatomic,assign)dispatch_queue_t completionQueue;
+#endif
 
 /**
  AFNetWorking sessionManager 默认都是创建没有单例模式 用了单例completionQueue则会赋值混乱
@@ -132,7 +135,11 @@ extern NSString *const UnkownRequestAPITag;
                            });
 
  */
+#if OS_OBJECT_USE_OBJC
 @property(nonatomic,strong)dispatch_group_t completionGroup;
+#else
+@property(nonatomic,assign)dispatch_group_t completionGroup;
+#endif
 
 
 /**
