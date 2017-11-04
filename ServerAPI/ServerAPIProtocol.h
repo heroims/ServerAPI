@@ -16,7 +16,7 @@ typedef void  (^sap_requestFailHandle)(ServerResult *result, NSError* errInfo);
 typedef void  (^sap_requestSuccessHandle)(ServerResult *result);
 typedef void  (^sap_requestCompletion)(ServerResult *result, NSError* errInfo);
 typedef void  (^sap_progressHandle)(float progress);
-typedef BOOL  (^sap_retryFilter)();
+typedef BOOL  (^sap_retryFilter)(void);
 
 #pragma mark - 必须实现的协议
 @protocol ServerAPIManagerRequestProtocol <NSObject>

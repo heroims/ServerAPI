@@ -35,7 +35,7 @@ typedef enum APIResultFormat:NSInteger{
 
 typedef void  (^sap_requestCompletion)(ServerResult *result, NSError* errInfo);
 typedef void  (^sap_progressHandle)(float progress);
-typedef BOOL  (^sap_retryFilter)();
+typedef BOOL  (^sap_retryFilter)(void);
 
 extern NSString *const UnkownRequestAPITag;
 

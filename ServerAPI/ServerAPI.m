@@ -123,7 +123,7 @@ NSString *const UnkownRequestAPITag = @"UnkownTag";
         [_fullRequestPath stringByReplacingOccurrencesOfString:pathParameterKey withString:self.requestPathParameters[pathParameterKey]];
     }
     for (NSString *parameterKey in _requestParameters.allKeys) {
-        if (![_fullRequestPath containsString:@"?"]) {
+        if ([_fullRequestPath rangeOfString:@"?"].location==NSNotFound) {
             _fullRequestPath=[NSString stringWithFormat:@"%@?%@=%@",_fullRequestPath,parameterKey?parameterKey:@"",self.requestParameters[parameterKey]?self.requestParameters[parameterKey]:@""];
         }
         else{
