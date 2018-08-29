@@ -53,6 +53,7 @@ extern NSString *const UnkownRequestAPITag;
 @property(nonatomic,strong)NSString *requestPath;
 @property(nonatomic,strong)NSString *requestHost;
 
+@property(nonatomic,strong)NSString *uploadName;
 @property(nonatomic,strong)NSString *uploadFileName;
 @property(nonatomic,strong)NSString *uploadFileType;
 @property(nonatomic,strong)NSData   *uploadData;

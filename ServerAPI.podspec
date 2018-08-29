@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name                  = 'ServerAPI'
-s.version               = '1.0.7'
+s.version               = '1.0.8'
 s.summary               = 'A  Web Service Framework   '
 s.homepage              = 'https://github.com/heroims/ServerAPI'
 s.license               = { :type => 'MIT', :file => 'README.md' }
